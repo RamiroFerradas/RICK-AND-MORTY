@@ -8,6 +8,8 @@ async function getEpisodes() {
   episodesDB = await Episode.findAll();
   if (episodesDB.length) {
     let results1 = episodesDB.map((ele) => ele.dataValues);
+    console.log("Episodios guadardados en db");
+
     return results1;
   } else {
     let { data } = await axios.get("https://rickandmortyapi.com/api/episode");
@@ -16,10 +18,10 @@ async function getEpisodes() {
         name: ele.name,
       };
     });
-    let final = results2.map(async (ele) => Episode.create(ele));
-
-    return final, console.log(episodesDB, "Episodios guadardados en db");
-    // return results;
+    let final = await results2.map(async (ele) => Episode.create(ele));
+    console.log("Episodios traidos de api");
+    let promesa = await Promise.all(final);
+    return promesa;
   }
 }
 getEpisodes();

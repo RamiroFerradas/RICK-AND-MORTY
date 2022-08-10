@@ -15,20 +15,36 @@ async function auxNamesEpisodes(arr) {
 }
 
 async function getCharacterApi() {
+  //hago 5 pedidos a la api para traer 100 (20x5)
   let { data } = await axios.get("https://rickandmortyapi.com/api/character");
-
+  let pedido2 = await axios.get(data.info.next);
+  let pedido3 = await axios.get(pedido2.data.info.next);
+  let pedido4 = await axios.get(pedido3.data.info.next);
+  let pedido5 = await axios.get(pedido4.data.info.next);
   let infoLimpia = data.results;
+  let infoLimpia2 = pedido2.data.results;
+  let infoLimpia3 = pedido3.data.results;
+  let infoLimpia4 = pedido4.data.results;
+  let infoLimpia5 = pedido5.data.results;
+
+  let concat = infoLimpia.concat(
+    infoLimpia2,
+    infoLimpia3,
+    infoLimpia4,
+    infoLimpia5
+  );
 
   let promesa = await Promise.all(
-    infoLimpia.map(async (ele) => {
-      let url = ele.episode;
+    concat.map((ele) => {
+      // let url = ele.episode;
       return {
         name: ele.name,
         id: ele.id,
         image: ele.image,
         species: ele.species,
         created: ele.created,
-        listadoEpisodes: await auxNamesEpisodes(url),
+        origin: ele.origin.name,
+        // episodes: await auxNamesEpisodes(url),
         episodes: ele.episode.length,
       };
     })
@@ -36,8 +52,8 @@ async function getCharacterApi() {
 
   return promesa;
 }
-getCharacterApi();
 
+getCharacterApi();
 async function getCharacterDb() {
   const characterDb = await Character.findAll({
     include: {
@@ -55,14 +71,14 @@ async function getCharacterDb() {
       image: ele.image,
       species: ele.species,
       created: ele.created,
-      listadoEpisodes: ele.episodes.map((ele) => ele.name),
-      episodes: ele.episodes.length,
+      origin: ele.origin.name,
+      // episodes: ele.episodes.map((ele) => ele.name),
+      episodes: ele.episodes,
       createdInDb: ele.createdInDb,
     };
   });
-  console.log(mapLimpieza);
+
   return mapLimpieza;
-  // console.log(mapeados);
 }
 
 async function getOneCharacter(id) {
@@ -74,7 +90,7 @@ async function getOneCharacter(id) {
         attributes: ["name"],
       },
     });
-    console.log(data, "ID DE CHARACTER CREADO");
+    console.log("ID DE CHARACTER CREADO");
     let arr = [];
     arr.push(data);
     return arr;
@@ -85,18 +101,20 @@ async function getOneCharacter(id) {
     );
 
     let urls = data.episode;
-    console.log(urls, "URLSSS");
+
     let apiId = {
       name: data.name,
       id: data.id,
       image: data.image,
       species: data.species,
       created: data.created,
-      listadoEpisodes: await auxNamesEpisodes(urls),
-      episodes: data.episode.length,
+      origin: data.origin.name,
+      episodes: await auxNamesEpisodes(urls),
     };
-    console.log(apiId), "ACA ESTOYY";
-    return apiId;
+
+    let arr2 = [];
+    arr2.push(apiId);
+    return arr2;
   }
 }
 
@@ -105,7 +123,7 @@ async function getConecatenado(name) {
   const getApi = await getCharacterApi();
 
   const getFinal = getApi.concat(getDb);
-  console.log(getDb);
+
   if (name) {
     let buscar = getFinal.filter(
       (ele) => ele.name.toLowerCase() === name.toLowerCase()
