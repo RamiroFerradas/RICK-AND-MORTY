@@ -93,9 +93,9 @@ export default function CreateCharacter() {
     alert("Tu character ha sido creado exitosamente");
     setInput({
       name: "",
-      image: "",
       origin: "",
-      speciess: "",
+      species: "",
+      image: "",
       episodes: [],
     });
     setTimeout(() => {
@@ -112,7 +112,7 @@ export default function CreateCharacter() {
   };
 
   return (
-    <form action="">
+    <form>
       <div>
         <h1>Crea tu personaje !</h1>
       </div>
@@ -126,7 +126,7 @@ export default function CreateCharacter() {
           placeholder="Name..."
           onChange={(e) => handlerChange(e)}
           className={styles.inputsForm}
-          autoComplete="off"
+          autoComplete="on"
         />
       </div>
       <div>
@@ -136,7 +136,7 @@ export default function CreateCharacter() {
           type="text"
           name="origin"
           value={input.origin}
-          placeholder="Name..."
+          placeholder="Origin..."
           onChange={(e) => handlerChange(e)}
           className={styles.inputsForm}
           autoComplete="off"
@@ -149,10 +149,10 @@ export default function CreateCharacter() {
           type="text"
           name="species"
           value={input.species}
-          placeholder="Name..."
+          placeholder="Species..."
           onChange={(e) => handlerChange(e)}
           className={styles.inputsForm}
-          autoComplete="off"
+          autoComplete="on"
         />
       </div>
       <div>
@@ -199,7 +199,7 @@ export default function CreateCharacter() {
           type="text"
           name="image"
           value={input.image}
-          placeholder="Name..."
+          placeholder="Url image..."
           onChange={(e) => handlerChange(e)}
           className={styles.inputsForm}
           autoComplete="off"

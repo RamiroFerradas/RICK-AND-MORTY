@@ -30,6 +30,22 @@ export function createCharacter(payload) {
   };
 }
 
+export function characterDetails(id) {
+  return async function (dispatch) {
+    try {
+      let json = await axios(`http://localhost:3001/character/${id}`);
+      console.log(json.data[0], "soy jsonn");
+      return dispatch({
+        type: "CHARACTER_DETAILS",
+        payload: json.data[0],
+      });
+    } catch (error) {
+      alert("NO SE ENCONTRO CHARACTER CON ESE ID");
+      console.log(error.message);
+    }
+  };
+}
+
 export function setCurrentPage(payload) {
   return {
     type: "SET_CURRENT_PAGE",

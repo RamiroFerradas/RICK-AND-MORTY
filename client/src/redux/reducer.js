@@ -4,6 +4,7 @@ const initialState = {
   page: 1,
   loading: true,
   episodes: [],
+  details: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -22,6 +23,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         episodes: action.payload,
         page: 1,
+      };
+    case "CHARACTER_DETAILS":
+      return {
+        ...state,
+        details: action.payload,
       };
 
     case "SET_CURRENT_PAGE":

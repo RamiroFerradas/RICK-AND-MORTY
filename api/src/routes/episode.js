@@ -24,7 +24,6 @@ async function getEpisodes() {
     return promesa;
   }
 }
-getEpisodes();
 
 module.exports = {
   getEpisodes,

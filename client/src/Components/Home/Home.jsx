@@ -64,10 +64,10 @@ export default function Home() {
             <div key={ele.id}>
               <Link to={`/character/${ele.id}`}>
                 <Card
-                  name={ele.name}
+                  name={ele.name[0].toUpperCase() + ele.name.slice(1)}
                   image={ele.image}
-                  origin={ele.origin}
-                  species={ele.species}
+                  origin={ele.origin[0].toUpperCase() + ele.origin.slice(1)}
+                  species={ele.species[0].toUpperCase() + ele.species.slice(1)}
                   episodes={ele.episodes}
                 />
               </Link>

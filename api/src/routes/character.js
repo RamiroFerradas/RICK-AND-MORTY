@@ -42,7 +42,6 @@ async function getCharacterApi() {
         id: ele.id,
         image: ele.image,
         species: ele.species,
-        created: ele.created,
         origin: ele.origin.name,
         // episodes: await auxNamesEpisodes(url),
         episodes: ele.episode.length,
@@ -53,7 +52,6 @@ async function getCharacterApi() {
   return promesa;
 }
 
-getCharacterApi();
 async function getCharacterDb() {
   const characterDb = await Character.findAll({
     include: {
@@ -70,10 +68,9 @@ async function getCharacterDb() {
       id: ele.id,
       image: ele.image,
       species: ele.species,
-      created: ele.created,
-      origin: ele.origin.name,
+      origin: ele.origin,
       // episodes: ele.episodes.map((ele) => ele.name),
-      episodes: ele.episodes,
+      episodes: ele.episodes.length,
       createdInDb: ele.createdInDb,
     };
   });
@@ -90,9 +87,11 @@ async function getOneCharacter(id) {
         attributes: ["name"],
       },
     });
+    // let limpieza = data;
+    // console.log(data.dataValues, "SOY DATA");
     console.log("ID DE CHARACTER CREADO");
     let arr = [];
-    arr.push(data);
+    arr.push(data.dataValues);
     return arr;
   } else {
     //traigo character desde la api
@@ -107,7 +106,6 @@ async function getOneCharacter(id) {
       id: data.id,
       image: data.image,
       species: data.species,
-      created: data.created,
       origin: data.origin.name,
       episodes: await auxNamesEpisodes(urls),
     };
