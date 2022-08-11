@@ -1,0 +1,23 @@
+/* From uiverse.io by @alexruix */
+.cardHome {
+  padding-top: 1rem;
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+  /* display: flex; */
+  float: left;
+  position: relative;
+  margin-bottom: 10rem;
+  margin-right: 4rem;
+}
+
+/*Image*/
+.imgCard {
+  height: 6rem;
+  width: 6rem;
+  /* display: flex; */
+  justify-content: center;
+  margin-left: 5rem;
+}

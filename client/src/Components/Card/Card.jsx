@@ -1,16 +1,19 @@
 import React from "react";
+import styles from "../../Components/Card/Card.module.css";
 
 export default function Card({ image, origin, species, episodes, name }) {
   return (
-    <div>
+    <div className={styles.cardHome}>
       <div>
-        <h1>{name}</h1>
-        <img src={image} alt="imagen" />
+        <img className={styles.imgCard} src={image} alt="imagen" />
       </div>
-      <div>
-        <p>Origin: {origin}</p>
-        <p>Specie:{species}</p>
-        <p>Episodes:{episodes}</p>
+      <div className={styles.dataCard}>
+        <p className={styles.h1Card}>{name}</p>
+        <div className={styles.textBody}>
+          <p>Origin: {origin}</p>
+          <p>Species:{species}</p>
+          <p>Episodes:{episodes}</p>
+        </div>
       </div>
     </div>
   );

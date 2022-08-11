@@ -1,6 +1,9 @@
 const initialState = {
   characters: [],
   allCharacters: [],
+  page: 1,
+  loading: true,
+  episodes: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -9,7 +12,40 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         characters: action.payload,
+        allCharacters: action.payload,
+        page: 1,
+        loading: false,
       };
+
+    case "GET_EPISODES":
+      return {
+        ...state,
+        episodes: action.payload,
+        page: 1,
+      };
+
+    case "SET_CURRENT_PAGE":
+      return {
+        ...state,
+        page: action.payload,
+        laoding: false,
+      };
+
+    case "SET_LOADING":
+      const estadoDelestado = state.loading;
+      if (estadoDelestado === true) {
+        return {
+          ...state,
+          loading: false,
+          page: 1,
+        };
+      } else {
+        return {
+          ...state,
+          page: 1,
+          loading: true,
+        };
+      }
 
     default:
       return state;

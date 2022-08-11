@@ -25,7 +25,7 @@ router.get("/episodes", async (req, res, next) => {
 });
 
 router.post("/character", async (req, res, next) => {
-  let { name, image, species, origin, created, episode } = req.body;
+  let { name, image, species, origin, created, episodes } = req.body;
   try {
     let newCharacter = await Character.create({
       name: name,
@@ -34,7 +34,7 @@ router.post("/character", async (req, res, next) => {
       origin: origin,
       created: created,
     });
-    await newCharacter.addEpisode(episode);
+    await newCharacter.addEpisode(episodes);
 
     res.status(200).send(newCharacter);
     console.log(
