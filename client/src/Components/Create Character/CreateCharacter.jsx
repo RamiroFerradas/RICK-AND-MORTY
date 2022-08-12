@@ -23,7 +23,7 @@ export default function CreateCharacter() {
   }, [dispatch]);
 
   const allEpisodes = useSelector((state) => state.episodes);
-  console.log(allEpisodes, "soy episodes");
+  const allCharacters = useSelector((state) => state.characters);
 
   const handlerFirstSelect = (e) => {
     if (input.episodes.length <= 1) {
@@ -67,6 +67,44 @@ export default function CreateCharacter() {
       });
     }
   };
+  /** VALIDACIONES **/
+
+  function validate(input) {
+    let errors = {};
+    //name
+    if (
+      allCharacters.find(
+        (char) => char.name.toUpperCase() === input.name.toUpperCase()
+      )
+    )
+      errors.name = "Ya existe un character con este nombre, escoge otro!";
+    if (!input.name) errors.name = "Tu character necesita un nombre!";
+    if (/[1-9]/.test(input.name))
+      errors.name = "El nombre de tu character no puede contener numeros";
+    if (/[^\w\s]/.test(input.name))
+      errors.name =
+        "El nombre de tu character no puede contener caracteres especiales";
+    //origin
+    if (!input.origin) errors.origin = "Tu character necesita un origin!";
+    if (/[1-9]/.test(input.origin))
+      errors.origin = "El origin de tu character no puede contener numeros";
+    if (/[^\w\s]/.test(input.origin))
+      errors.origin =
+        "El origin de tu character no puede contener caracteres especiales";
+    //species
+    if (!input.species) errors.species = "Tu character necesita una species!";
+    if (/[1-9]/.test(input.species))
+      errors.species = "La species de tu character no puede contener numeros";
+    if (/[^\w\s]/.test(input.species))
+      errors.species =
+        "La species de tu character no puede contener caracteres especiales";
+    //image
+    if (!/\.(jpg|png|gif)$/i.test(input.image))
+      errors.image = "La url que intentas colocar no es valida";
+
+    return errors;
+  }
+
   const [errors, setErrors] = useState({});
   const [disabledButton, setDisabledButton] = useState(true);
   useEffect(() => {
@@ -74,7 +112,7 @@ export default function CreateCharacter() {
     if (
       input.name === "" ||
       /[1-9]/.test(input.name) ||
-      /[\s]/.test(input.name) ||
+      // /[\s]/.test(input.name) ||
       /[^\w\s]/.test(input.name) ||
       input.origin.length < 1 ||
       input.species.length < 1 ||
@@ -109,6 +147,12 @@ export default function CreateCharacter() {
       ...input,
       [e.target.name]: e.target.value,
     });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   };
 
   return (
@@ -119,7 +163,6 @@ export default function CreateCharacter() {
       <div>
         <label>Name: </label>
         <input
-          // required
           type="text"
           name="name"
           value={input.name}
@@ -129,10 +172,11 @@ export default function CreateCharacter() {
           autoComplete="on"
         />
       </div>
+      <div> {errors.name && <p>{errors.name}</p>}</div>
+
       <div>
         <label>Origin: </label>
         <input
-          // required
           type="text"
           name="origin"
           value={input.origin}
@@ -142,10 +186,10 @@ export default function CreateCharacter() {
           autoComplete="off"
         />
       </div>
+      <div> {errors.origin && <p>{errors.origin}</p>}</div>
       <div>
         <label>Species: </label>
         <input
-          // required
           type="text"
           name="species"
           value={input.species}
@@ -155,6 +199,7 @@ export default function CreateCharacter() {
           autoComplete="on"
         />
       </div>
+      <div> {errors.species && <p>{errors.species}</p>}</div>
       <div>
         <label>Episode 1: </label>
 
@@ -205,6 +250,7 @@ export default function CreateCharacter() {
           autoComplete="off"
         />
       </div>
+      <div> {errors.image && <p>{errors.image}</p>}</div>
       <div>
         <button
           disabled={disabledButton}

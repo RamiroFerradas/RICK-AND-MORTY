@@ -21,6 +21,7 @@ async function getCharacterApi() {
   let pedido3 = await axios.get(pedido2.data.info.next);
   let pedido4 = await axios.get(pedido3.data.info.next);
   let pedido5 = await axios.get(pedido4.data.info.next);
+
   let infoLimpia = data.results;
   let infoLimpia2 = pedido2.data.results;
   let infoLimpia3 = pedido3.data.results;
@@ -38,7 +39,7 @@ async function getCharacterApi() {
     concat.map((ele) => {
       // let url = ele.episode;
       return {
-        name: ele.name,
+        name: ele.name[0].toUpperCase() + ele.name.slice(1),
         id: ele.id,
         image: ele.image,
         species: ele.species,
@@ -64,7 +65,7 @@ async function getCharacterDb() {
   });
   let mapLimpieza = mapeados.map((ele) => {
     return {
-      name: ele.name,
+      name: ele.name[0].toUpperCase() + ele.name.slice(1),
       id: ele.id,
       image: ele.image,
       species: ele.species,
@@ -87,11 +88,13 @@ async function getOneCharacter(id) {
         attributes: ["name"],
       },
     });
-    // let limpieza = data;
-    // console.log(data.dataValues, "SOY DATA");
-    console.log("ID DE CHARACTER CREADO");
+
+    let limpieza = data.dataValues;
+
+    limpieza.episodes = limpieza.episodes.map((ele) => ele.dataValues.name);
+
     let arr = [];
-    arr.push(data.dataValues);
+    arr.push(limpieza);
     return arr;
   } else {
     //traigo character desde la api

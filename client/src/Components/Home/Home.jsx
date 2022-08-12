@@ -1,9 +1,10 @@
 import React from "react";
 import { useEffect } from "react";
-import {
+import filterEpisodes, {
   getCharacters,
   setCurrentPage,
   getEpisodes,
+  cleanCache,
 } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -12,13 +13,16 @@ import NavBar from "../../NavBar/NavBar";
 import Paginado from "../Paginado/Paginado";
 import Loading from "../Loading/Loading";
 import { useState } from "react";
+import Filtrados from "../Filtrados/Filtrados";
+import orderAz from "../../redux/actions";
 
 export default function Home() {
   const loading = useSelector((state) => state.loading);
   const dispatch = useDispatch();
+  const [order, setOrder] = useState("");
 
-  let allCharactersFiltrados = useSelector((state) => state.allCharacters);
-  const characters = useSelector((state) => state.characters);
+  let allCharactersFiltrados = useSelector((state) => state.characters);
+  // const characters = useSelector((state) => state.characters);
 
   let page = useSelector((state) => state.page);
 
@@ -31,6 +35,7 @@ export default function Home() {
   ); //12 - 24
 
   useEffect(() => {
+    // dispatch(cleanCache());
     dispatch(getCharacters());
     dispatch(getEpisodes());
   }, [dispatch]);
@@ -54,10 +59,16 @@ export default function Home() {
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
+          <option value="50">50</option>
         </select>
       </div>
       {/* <input type="range" max="50" onChange={(e) => handleChangeRange(e)} />; */}
-      <Paginado allCharacters={allCharactersFiltrados.length} />
+      <div>
+        <Paginado allCharacters={allCharactersFiltrados.length} />
+      </div>
+      <div>
+        <Filtrados setOrder={setOrder} />
+      </div>
       {currentCharacters &&
         currentCharacters.map((ele) => {
           return (

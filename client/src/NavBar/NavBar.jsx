@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import SearchBar from "../Components/Search Bar/SearchBar";
 
 export default function NavBar() {
@@ -14,6 +15,7 @@ export default function NavBar() {
       <Link to={"/about"}>
         <button>ABOUT</button>
       </Link>
+
       <SearchBar />
     </>
   );

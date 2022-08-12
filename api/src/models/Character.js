@@ -9,7 +9,6 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.UUID,
         primaryKey: true,
-        allowNull: false, // CAMPO OBLIGATORIO
         defaultValue: DataTypes.UUIDV4,
       },
       name: {
