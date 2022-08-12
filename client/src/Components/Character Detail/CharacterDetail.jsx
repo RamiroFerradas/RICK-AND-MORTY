@@ -1,8 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { characterDetails, cleanCache } from "../../redux/actions";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  characterDetails,
+  cleanCache,
+  recargarHome,
+} from "../../redux/actions";
 import Loading from "../Loading/Loading";
 
 export default function CharacterDetail() {
@@ -18,10 +22,23 @@ export default function CharacterDetail() {
     };
   }, [dispatch, id]);
 
+  let cleanAndBack = () => {
+    navigate("/home");
+    dispatch(recargarHome());
+  };
+
   return details.image ? (
     <div>
       <div>
-        <img src={details.image} alt={details.name} />
+        <button onClick={(e) => cleanAndBack(e)}>Back</button>
+      </div>
+      <div>
+        <img
+          width="400rem"
+          height="600rem"
+          src={details.image}
+          alt={details.name}
+        />
       </div>
       <div>
         <h1>Name: {details.name}</h1>
@@ -34,14 +51,10 @@ export default function CharacterDetail() {
       </div>
       <div>
         Episodes:
-        {details.episodes?.map((ele) => {
+        <p>{details.episodes}</p>
+        {/* {details.episodes?.map((ele) => {
           return <p key={ele}>- {ele}</p>;
-        })}
-      </div>
-      <div>
-        <Link to={"/home"}>
-          <button>Back</button>
-        </Link>
+        })} */}
       </div>
     </div>
   ) : (

@@ -26,6 +26,16 @@ router.get("/episodes", async (req, res, next) => {
 
 router.post("/character", async (req, res, next) => {
   let { name, image, species, origin, episodes } = req.body;
+  if (
+    !image ||
+    image === undefined ||
+    image === "" ||
+    !/(https?:\/\/.*\.(?:png|jpg|jpeg))/i.test(image)
+  ) {
+    image =
+      " https://cinematicos.net/wp-content/uploads/l-intro-1659557579.jpg";
+  }
+
   try {
     let newCharacter = await Character.create({
       name: name,

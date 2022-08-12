@@ -36,16 +36,16 @@ async function getCharacterApi() {
   );
 
   let promesa = await Promise.all(
-    concat.map((ele) => {
-      // let url = ele.episode;
+    concat.map(async (ele) => {
+      let url = ele.episode;
       return {
         name: ele.name[0].toUpperCase() + ele.name.slice(1),
         id: ele.id,
         image: ele.image,
         species: ele.species,
         origin: ele.origin.name,
-        // episodes: await auxNamesEpisodes(url),
-        episodes: ele.episode.length,
+        episodes: await auxNamesEpisodes(url),
+        // episodes: ele.episode.length,
       };
     })
   );
@@ -70,8 +70,8 @@ async function getCharacterDb() {
       image: ele.image,
       species: ele.species,
       origin: ele.origin,
-      // episodes: ele.episodes.map((ele) => ele.name),
-      episodes: ele.episodes.length,
+      episodes: ele.episodes.map((ele) => ele.name),
+      // episodes: ele.episodes.length,
       createdInDb: ele.createdInDb,
     };
   });

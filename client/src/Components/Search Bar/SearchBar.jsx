@@ -1,18 +1,17 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { searchCharacter } from "../../redux/actions";
+import { searchCharacter, setCurrentPage } from "../../redux/actions";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
-  const characters = useSelector((state) => state.characters);
   const [name, setName] = useState("");
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(e, name);
     dispatch(searchCharacter(name));
     e.target.reset();
+    setCurrentPage(1);
   };
 
   let handleInputChange = (e) => {

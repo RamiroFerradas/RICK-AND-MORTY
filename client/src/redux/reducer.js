@@ -26,11 +26,10 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case "SEARCH_CHARACTER":
-      let search = state.allCharacters;
-      let unCharacter = search.filter((ele) =>
+      let unCharacter = state.allCharacters.filter((ele) =>
         ele.name.toLowerCase().includes(action.payload.toLowerCase())
       );
-      console.log(unCharacter, "soy reducer");
+
       return {
         ...state,
         characters: unCharacter,
@@ -43,31 +42,27 @@ export default function rootReducer(state = initialState, action) {
         details: action.payload,
       };
 
-    // case "FILTER_BY_EPISODES":
-    //   return {
-    //     ...state,
-
-    //     characters: state.allCharacters.filter((ele) => {
-    //       console.log(ele.episodes);
-    //       if (action.payload === "all") {
-    //         return state.allCharacters;
-    //       } else {
-    //         return ele.episodes.includes(action.payload);
-    //       }
-    //     }),
-    //     loading: false,
-    //     page: 1,
-    //   };
+    case "FILTER_BY_EPISODES":
+      let filt = state.allCharacters.filter((ele) => {
+        if (action.payload === "all") {
+          return state.allCharacters;
+        } else {
+          return ele.episodes.includes(action.payload);
+        }
+      });
+      return {
+        ...state,
+        characters: filt,
+        loading: false,
+        page: 1,
+      };
 
     case "ORDER_AZ":
       let currentCharacters = [...state.allCharacters];
       if (action.payload === "derfault") {
-        let a = [...state.allCharacters];
-
-        currentCharacters = a;
         return {
           ...state,
-          characters: a,
+          characters: currentCharacters,
           page: 1,
         };
       }
@@ -97,6 +92,19 @@ export default function rootReducer(state = initialState, action) {
         characters: currentCharacters,
       };
 
+    case "FILTER_BY_CREATED":
+      const createdFilter =
+        action.payload === "created"
+          ? state.allCharacters.filter((ele) => ele.createdInDb)
+          : state.allCharacters.filter((ele) => !ele.createdInDb);
+
+      return {
+        ...state,
+        characters: createdFilter,
+        loading: false,
+        page: 1,
+      };
+
     case "SET_CURRENT_PAGE":
       return {
         ...state,
@@ -119,6 +127,12 @@ export default function rootReducer(state = initialState, action) {
           loading: true,
         };
       }
+    case "RECARGAR":
+      return {
+        ...state,
+        characters: [state.allCharacters],
+        page: 1,
+      };
 
     case "CLEAN_CACHE":
       return {

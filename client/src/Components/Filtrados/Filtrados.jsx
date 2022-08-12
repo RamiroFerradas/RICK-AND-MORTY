@@ -1,6 +1,6 @@
 import React from "react";
 import FiltradoAz from "./FiltradoAz";
-// import FiltradoEpisodes from "./FiltradoEpisodes";
+import FiltradoEpisodes from "./FiltradoEpisodes";
 import FiltradoCreacion from "./FiltradoCreacion";
 
 export default function Filtrados({ setOrder }) {
@@ -9,7 +9,9 @@ export default function Filtrados({ setOrder }) {
       <div>
         <FiltradoAz setOrder={setOrder} />
       </div>
-      <div>{/* <FiltradoEpisodes /> */}</div>
+      <div>
+        <FiltradoEpisodes />
+      </div>
       <div>
         <FiltradoCreacion />
       </div>

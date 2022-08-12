@@ -50,7 +50,6 @@ export function searchCharacter(name) {
   return async function (dispatch) {
     try {
       console.log("soy try de actions");
-      // let json = (await axios(`http://localhost:3001/character/${name}`)).data;
       return dispatch({
         type: "SEARCH_CHARACTER",
         payload: name,
@@ -63,17 +62,25 @@ export function searchCharacter(name) {
 }
 
 //filtrados
-// export default function filterEpisodes(payload) {
-//   try {
-//     return {
-//       type: "FILTER_BY_EPISODES",
-//       payload,
-//     };
-//   } catch (error) {
-//     error(error, "error en el filter");
-//   }
-// }
-export default function orderAz(payload) {
+export default function filterEpisodes(payload) {
+  try {
+    return {
+      type: "FILTER_BY_EPISODES",
+      payload,
+    };
+  } catch (error) {
+    error(error, "error en el filter");
+  }
+}
+
+export function filterByCreated(payload) {
+  return {
+    type: "FILTER_BY_CREATED",
+    payload,
+  };
+}
+
+export function orderAz(payload) {
   return {
     type: "ORDER_AZ",
     payload,
@@ -90,5 +97,11 @@ export function setCurrentPage(payload) {
 export function cleanCache() {
   return {
     type: "CLEAN_CACHE",
+  };
+}
+
+export function recargarHome() {
+  return {
+    type: "RECARGA",
   };
 }

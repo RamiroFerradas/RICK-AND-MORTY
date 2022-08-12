@@ -14,7 +14,6 @@ import Paginado from "../Paginado/Paginado";
 import Loading from "../Loading/Loading";
 import { useState } from "react";
 import Filtrados from "../Filtrados/Filtrados";
-import orderAz from "../../redux/actions";
 
 export default function Home() {
   const loading = useSelector((state) => state.loading);
@@ -50,7 +49,7 @@ export default function Home() {
 
   return !loading ? (
     <div>
-      <NavBar />
+      <NavBar setOrder={setOrder} />
       <div></div>
       <div>
         <label> Pages</label>

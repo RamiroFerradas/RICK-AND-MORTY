@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector, useState } from "react-redux";
-import orderAz, { setCurrentPage } from "../../redux/actions";
+import { orderAz, setCurrentPage } from "../../redux/actions";
 
 export default function FiltradoAz({ setOrder }) {
   let dispatch = useDispatch();

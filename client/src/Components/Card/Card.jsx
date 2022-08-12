@@ -12,7 +12,7 @@ export default function Card({ image, origin, species, episodes, name }) {
         <div className={styles.textBody}>
           <p>Origin: {origin}</p>
           <p>Species:{species}</p>
-          <p>Episodes:{episodes}</p>
+          <p>Episodes:{episodes.length}</p>
         </div>
       </div>
     </div>
